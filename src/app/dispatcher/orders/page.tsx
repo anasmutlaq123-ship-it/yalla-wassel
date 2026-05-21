@@ -3,7 +3,7 @@ import { NewOrderForm } from "@/components/dispatcher/new-order-form";
 
 export default function OrdersPage() {
   return (
-    <div className="p-6 lg:p-10 max-w-[1100px]">
+    <div className="p-6 md:p-10 max-w-[1240px]">
       <header className="mb-8 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs uppercase tracking-[0.16em] font-bold text-trust">
