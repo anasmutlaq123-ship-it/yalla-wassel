@@ -74,7 +74,14 @@ export function LoginForm() {
           {error}
         </div>
       )}
-      <Button type="submit" variant="gradient" size="lg" full disabled={pending}>
+      <Button
+        type="submit"
+        variant="gradient"
+        size="xl"
+        full
+        disabled={pending}
+        className="mt-2"
+      >
         {pending ? "Signing in…" : "Sign in"}
       </Button>
     </form>

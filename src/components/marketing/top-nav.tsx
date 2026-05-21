@@ -36,8 +36,8 @@ export function TopNav() {
           : "bg-transparent border-b border-transparent"
       )}
     >
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">
-        <Logo size="sm" />
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-10 h-24 flex items-center justify-between">
+        <Logo size="lg" />
 
         <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
           {ITEMS.map((it) => (
@@ -53,12 +53,12 @@ export function TopNav() {
 
         <div className="flex items-center gap-2">
           <Link href="/login" className="hidden sm:inline-flex">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="md">
               Sign in
             </Button>
           </Link>
           <Link href="/login?as=dispatcher">
-            <Button size="sm">
+            <Button size="md">
               Start delivering
               <span aria-hidden className="ml-0.5">→</span>
             </Button>

@@ -4,22 +4,35 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Avatar } from "@/components/ui/avatar";
 
-const FLOAT = {
-  card: (delay = 0) => ({
-    initial: { opacity: 0, y: 24, scale: 0.96 },
-    animate: { opacity: 1, y: 0, scale: 1 },
-    transition: {
-      duration: 0.7,
-      delay,
-      ease: [0.2, 0.8, 0.2, 1] as const,
-    },
-  }),
+// Entrance gets its own delayed timeline. Hover is a fresh transition
+// (delay: 0, never inherits the entrance delay) so cards react instantly
+// when the cursor enters.
+const entrance = (delay = 0) => ({
+  initial: { opacity: 0, y: 24, scale: 0.96 },
+  animate: { opacity: 1, y: 0, scale: 1 },
+  transition: { duration: 0.7, delay, ease: [0.2, 0.8, 0.2, 1] as const },
+});
+
+const HOVER_LIFT = {
+  scale: 1.06,
+  y: -10,
+  transition: {
+    type: "spring" as const,
+    stiffness: 320,
+    damping: 22,
+    delay: 0,
+  },
+};
+const HOVER_LIFT_SUBTLE = {
+  ...HOVER_LIFT,
+  scale: 1.04,
+  y: -8,
 };
 
 export function HeroCards() {
   return (
     <div className="relative h-[520px] sm:h-[560px] w-full">
-      {/* Soft decorative blobs */}
+      {/* Decorative blobs */}
       <div
         aria-hidden
         className="absolute -inset-10 -z-10"
@@ -39,11 +52,12 @@ export function HeroCards() {
 
       {/* ── Driver status — top-left ─────────────────────────────── */}
       <motion.div
-        {...FLOAT.card(0.15)}
-        className="absolute top-2 left-2 sm:left-6 z-30"
+        {...entrance(0.15)}
+        whileHover={HOVER_LIFT}
+        className="absolute top-2 left-2 sm:left-6 z-30 hover:z-[60] cursor-pointer"
       >
         <div className="animate-float-slow">
-          <div className="bg-white rounded-3xl shadow-lift border border-surface-line p-4 w-[260px] -rotate-[2deg]">
+          <div className="bg-white rounded-3xl shadow-lift hover:shadow-glow transition-shadow duration-200 border border-surface-line p-4 w-[260px] -rotate-[2deg]">
             <div className="flex items-center gap-3">
               <Avatar name="Mahmoud" size="md" />
               <div className="min-w-0 flex-1">
@@ -71,11 +85,12 @@ export function HeroCards() {
 
       {/* ── Delivered confirmation — top-right ───────────────────── */}
       <motion.div
-        {...FLOAT.card(0.3)}
-        className="absolute top-8 right-0 sm:right-4 z-20"
+        {...entrance(0.3)}
+        whileHover={HOVER_LIFT}
+        className="absolute top-8 right-0 sm:right-4 z-20 hover:z-[60] cursor-pointer"
       >
         <div className="animate-float">
-          <div className="bg-white rounded-3xl shadow-lift border border-surface-line p-4 w-[240px] rotate-[3deg]">
+          <div className="bg-white rounded-3xl shadow-lift hover:shadow-glow transition-shadow duration-200 border border-surface-line p-4 w-[240px] rotate-[3deg]">
             <div className="flex items-center gap-3">
               <span className="h-10 w-10 rounded-2xl bg-success-soft text-success-ink grid place-items-center">
                 <svg
@@ -109,11 +124,12 @@ export function HeroCards() {
 
       {/* ── Big trust score card — center ────────────────────────── */}
       <motion.div
-        {...FLOAT.card(0.4)}
-        className="absolute top-[160px] left-1/2 -translate-x-1/2 z-40"
+        {...entrance(0.4)}
+        whileHover={HOVER_LIFT_SUBTLE}
+        className="absolute top-[160px] left-1/2 -translate-x-1/2 z-40 hover:z-[60] cursor-pointer"
       >
         <div className="animate-float-slow">
-          <div className="bg-white rounded-4xl shadow-glow border border-surface-line p-6 w-[300px] sm:w-[340px] rotate-[-1deg]">
+          <div className="bg-white rounded-4xl shadow-glow hover:shadow-lift transition-shadow duration-200 border border-surface-line p-6 w-[300px] sm:w-[340px] rotate-[-1deg]">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.16em] text-ink-faint font-bold">
@@ -140,11 +156,12 @@ export function HeroCards() {
 
       {/* ── Timeline event — lower left ──────────────────────────── */}
       <motion.div
-        {...FLOAT.card(0.55)}
-        className="absolute bottom-12 left-0 sm:left-2 z-20"
+        {...entrance(0.55)}
+        whileHover={HOVER_LIFT}
+        className="absolute bottom-12 left-0 sm:left-2 z-20 hover:z-[60] cursor-pointer"
       >
         <div className="animate-float">
-          <div className="bg-white rounded-3xl shadow-lift border border-surface-line p-4 w-[230px] rotate-[-3deg]">
+          <div className="bg-white rounded-3xl shadow-lift hover:shadow-glow transition-shadow duration-200 border border-surface-line p-4 w-[230px] rotate-[-3deg]">
             <p className="text-[10px] uppercase tracking-[0.16em] text-ink-faint font-bold">
               Latest event
             </p>
@@ -168,11 +185,12 @@ export function HeroCards() {
 
       {/* ── ETA — lower right ────────────────────────────────────── */}
       <motion.div
-        {...FLOAT.card(0.7)}
-        className="absolute bottom-2 right-2 sm:right-8 z-30"
+        {...entrance(0.7)}
+        whileHover={HOVER_LIFT}
+        className="absolute bottom-2 right-2 sm:right-8 z-30 hover:z-[60] cursor-pointer"
       >
         <div className="animate-float-slow">
-          <div className="bg-violet-grad rounded-3xl shadow-glow p-5 w-[230px] text-white rotate-[2.5deg] button-inner-glow">
+          <div className="bg-violet-grad rounded-3xl shadow-glow hover:shadow-lift transition-shadow duration-200 p-5 w-[230px] text-white rotate-[2.5deg] button-inner-glow">
             <p className="text-[10px] uppercase tracking-[0.18em] font-bold opacity-80">
               ETA
             </p>
@@ -201,14 +219,7 @@ function TrustRing({ value }: { value: number }) {
   const offset = C - (value / 100) * C;
   return (
     <svg viewBox="0 0 72 72" className="h-20 w-20">
-      <circle
-        cx="36"
-        cy="36"
-        r={R}
-        stroke="#EDE9FE"
-        strokeWidth="8"
-        fill="none"
-      />
+      <circle cx="36" cy="36" r={R} stroke="#EDE9FE" strokeWidth="8" fill="none" />
       <circle
         cx="36"
         cy="36"
