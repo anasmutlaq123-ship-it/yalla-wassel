@@ -1,4 +1,4 @@
-# Product Strategy — TrustOS
+# Product Strategy — Yalla Wassel
 
 > Accountability without surveillance. Trust without micromanagement.
 
@@ -12,7 +12,7 @@ Then a courier lost a customer's package and blamed traffic. Hadeel installed GP
 
 She didn't want to lose her team. She didn't want to lose her business. **She needed a third option.**
 
-That third option is TrustOS.
+That third option is Yalla Wassel.
 
 ---
 
@@ -49,7 +49,7 @@ Trust is two-way. Drivers rate the system on fairness, assignment quality, and p
 ## 4. User Pain Points We Solve
 
 ### Hadeel (Dispatcher / Owner)
-| Pain | Today | With TrustOS |
+| Pain | Today | With Yalla Wassel |
 |---|---|---|
 | "Which order is where?" | WhatsApp scrollback | Timeline dashboard — one card per active order |
 | "Who do I assign this to?" | Gut feel + shouting | Explainable suggestion — accept in one click |
@@ -57,7 +57,7 @@ Trust is two-way. Drivers rate the system on fairness, assignment quality, and p
 | "Is the team okay?" | Wait for resignations | System trust score, weekly trend |
 
 ### The Drivers (Mahmoud, Youssef, Hamza, Amjad, Wael, Khaled)
-| Pain | Today | With TrustOS |
+| Pain | Today | With Yalla Wassel |
 |---|---|---|
 | "I feel watched" | GPS app running in background | No GPS. Four taps per order. |
 | "Notifications stress me out" | WhatsApp pings, manager calls | Silent Mode — one screen, one order |
@@ -65,7 +65,7 @@ Trust is two-way. Drivers rate the system on fairness, assignment quality, and p
 | "Nobody believes my delay reason" | Argument over the phone | Tap "Store delay" — appended to ledger, customer sees it |
 
 ### Customers (Mona, Ahmad, Layla, Tareq, Hala)
-| Pain | Today | With TrustOS |
+| Pain | Today | With Yalla Wassel |
 |---|---|---|
 | "Where's my order?" | Call the shop, get shrug | Public track link — timeline + ETA |
 | "Is this even on the way?" | Anxiety | Last checkpoint timestamp + neighborhood |
@@ -73,18 +73,18 @@ Trust is two-way. Drivers rate the system on fairness, assignment quality, and p
 
 ---
 
-## 5. Competitive Wedge — Why TrustOS Wins
+## 5. Competitive Wedge — Why Yalla Wassel Wins
 
 Five-second pitch: **"We replaced the GPS tracker with a checkpoint button and a two-way trust score. Drivers stopped quitting."**
 
 ### vs. Generic Delivery Software (Bringg, Onfleet, Tookan)
-They are built for fleets of contractors where the workforce is interchangeable. Yalla Wassel's team is its **moat**. TrustOS optimizes for *retention*, not *replacement*.
+They are built for fleets of contractors where the workforce is interchangeable. Our team is the **moat**. We optimize for *retention*, not *replacement*.
 
 ### vs. WhatsApp + Spreadsheets
 We are 10× more legible without becoming 10× more invasive. We never demand the driver's full attention — Silent Mode is the whole product philosophy in one screen.
 
 ### vs. Full Surveillance (GPS + camera)
-Surveillance has a hidden cost: the people doing the work resent it and the best ones leave. TrustOS makes the trade-off visible and refuses it.
+Surveillance has a hidden cost: the people doing the work resent it and the best ones leave. Yalla Wassel makes the trade-off visible and refuses it.
 
 ### The Investor Pitch
 > "We are not building delivery software. We are building **trust infrastructure** for any operation where workers feel surveilled — warehouse pickers, home-care nurses, field technicians. The first wedge is same-day delivery in MENA, where workforce churn is the single biggest operational cost."
@@ -130,6 +130,6 @@ Hadeel's goal in month one: **Mutual Trust Index ≥ 85**.
 
 ## 8. Why Judges Should Remember This
 
-Most hackathon delivery apps optimize for the **owner**. TrustOS optimizes for the **driver** and proves that the owner wins anyway — because the moat in same-day delivery is not software, it is **a team that does not quit**.
+Most hackathon delivery apps optimize for the **owner**. Yalla Wassel optimizes for the **driver** and proves that the owner wins anyway — because the moat in same-day delivery is not software, it is **a team that does not quit**.
 
 We made one specific bet: **that you can run a delivery business in 2026 without knowing where your drivers are at every moment.** If we are right, every "fleet management" product is solving the wrong problem.

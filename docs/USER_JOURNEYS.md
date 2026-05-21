@@ -1,4 +1,4 @@
-# User Journeys — TrustOS
+# User Journeys — Yalla Wassel
 
 Three roles. Three distinct emotional contracts.
 
@@ -10,7 +10,7 @@ Three roles. Three distinct emotional contracts.
 
 | Step | Trigger | Screen | What the system does |
 |---|---|---|---|
-| 1 | Mona orders from Reem Pharmacy via WhatsApp | — | Reem Pharmacy creates order 1001 in TrustOS, shares link `trustos.app/track/TRUST-1001` |
+| 1 | Mona orders from Reem Pharmacy via WhatsApp | — | Reem Pharmacy creates order 1001 in Yalla Wassel, shares link `yallawassel.app/track/TRUST-1001` |
 | 2 | Mona taps the link | `/track/TRUST-1001` | Public page loads — no login. Shows order summary, current status, predictive ETA range |
 | 3 | Order is `Assigned` | Track page | First checkpoint chip lights up. Anonymous driver tag: "Driver M., West Amman" — first name initial only |
 | 4 | Driver taps "Picked Up" | Track page (poll updates) | Timeline grows; ETA tightens from a 15-min range to a 7-min range |
@@ -32,7 +32,7 @@ Three roles. Three distinct emotional contracts.
 **Emotional contract:** *"Tell me what to do next. Don't make me argue to be believed."*
 
 ### Morning — Going on shift
-1. Mahmoud opens `trustos.app` on his phone, taps "I'm on shift". One screen, two buttons: `On shift` / `Off duty`.
+1. Mahmoud opens `yallawassel.app` on his phone, taps "I'm on shift". One screen, two buttons: `On shift` / `Off duty`.
 2. Silent Mode is now active. Background is calm off-white. No badges, no red dots.
 
 ### First assignment
@@ -52,7 +52,7 @@ Three roles. Three distinct emotional contracts.
 6. Card refreshes. New big button: **"I'm nearby"**. He taps when he turns onto Mona's street.
 7. New big button: **"Delivered"**. He hands the package over. He taps. He types the customer's 4-digit confirmation code. Done.
 
-### Things go wrong (this is where TrustOS earns its keep)
+### Things go wrong (this is where Yalla Wassel earns its keep)
 8. The pharmacy is slow. He taps the small "Delay reason" link → 4 chips (Traffic · Store delay · Customer unavailable · Vehicle). One tap. The customer's track page updates. No phone call needed.
 9. His scooter has a flat. He taps the **Help** button → 4 chips → "Vehicle issue". The dispatcher sees the alert instantly. The engine suggests Amjad (nearby, low workload) for handoff.
 

@@ -1,8 +1,8 @@
-# TrustOS
+# Yalla Wassel
 
-> **An accountability system for delivery teams that replaces surveillance with transparency.**
+> **Accountability without surveillance. Trust without micromanagement.**
 
-Built for **Yalla Wassel** — Hadeel's same-day delivery operation in Amman, after her GPS rollout caused drivers to resign.
+Yalla Wassel is a same-day delivery operation in Amman — and the trust system it runs on. Eight drivers, real customers, no GPS tracking.
 
 ---
 
@@ -16,7 +16,7 @@ Surveillance answers the wrong question. Knowing *where* a driver is at 9:47:12 
 
 **Accountability is the result of clear commitments, not constant observation.**
 
-TrustOS replaces continuous location tracking with three primitives:
+Yalla Wassel replaces continuous location tracking with three primitives:
 
 1. **A small set of intentional checkpoints** drivers tap themselves — public commitments instead of passive coordinates.
 2. **A two-way trust score** — drivers rate the system on fairness, assignment quality, and pressure. The dispatcher's score is visible to drivers.
@@ -35,6 +35,7 @@ The dispatch engine ranks drivers by `area match + current workload + availabili
 
 ### Plus
 - **Silent Driver Mode** — one screen, one order, four buttons. No notifications, no map, no chat noise.
+- **Customer Login & Dashboard** — customers see their own orders, ETA, and confirmation code. Privacy-scoped — no one sees another customer's data.
 - **Help Button** — four reasons, one tap, dispatcher sees alert immediately, nearby support suggested.
 - **Predictive ETA** — historical neighborhood-to-neighborhood durations, not live GPS.
 - **Area Ownership** — drivers specialize by neighborhood and earn familiarity bonuses.
@@ -53,12 +54,16 @@ Open <http://localhost:3000>.
 
 ### Demo accounts (all password: `trustos`)
 
-| Role | Username | Try |
+| Role | Username | What you see |
 |---|---|---|
-| Dispatcher | `hadeel` | Timeline, dispatch board, driver trust |
-| Driver | `mahmoud` | Silent mode, checkpoints, help |
-| Driver | `youssef` | In-progress delivery view |
-| Customer | (no login) | <http://localhost:3000/track/TRUST-1001> |
+| **Dispatcher** | `hadeel` | Command center, dispatch board, mutual-trust dashboard |
+| **Driver** | `mahmoud` | Silent Mode — one screen, one order |
+| **Driver** | `youssef` | An in-flight delivery (already past pickup) |
+| **Customer** | `mona` | Active urgent pharmacy delivery + 2 historical orders |
+| **Customer** | `ahmad` | One in-flight flowers order |
+| **Customer** | `layla` | One pending food order + 1 historical |
+| **Customer** | `hala` | Urgent pharmacy delivery + 1 historical |
+| **Public tracking** | _(no login)_ | <http://localhost:3000/track/TRUST-1001> |
 
 ---
 
@@ -68,7 +73,7 @@ Open <http://localhost:3000>.
 |---|---|
 | Framework | Next.js 15 (App Router) |
 | Language | TypeScript (strict) |
-| Styling | Tailwind CSS + shadcn/ui primitives |
+| Styling | Tailwind CSS + handcrafted UI primitives |
 | Motion | Framer Motion |
 | Forms | React Server Actions + native forms |
 | DB (production design) | PostgreSQL + Prisma — schema in `prisma/schema.prisma` |
@@ -84,36 +89,41 @@ Open <http://localhost:3000>.
 ## Project Layout
 
 ```
-trustos/
+yalla-wassel/
 ├── docs/
-│   ├── PRODUCT_STRATEGY.md   ← vision, pain points, why we win
-│   ├── USER_JOURNEYS.md      ← customer / driver / dispatcher flows
-│   ├── UX_STRUCTURE.md       ← screen hierarchy, wireframes, states
-│   └── API.md                ← endpoints, role permissions, examples
+│   ├── PRODUCT_STRATEGY.md      ← vision, pain points, why we win
+│   ├── USER_JOURNEYS.md         ← customer / driver / dispatcher flows
+│   ├── UX_STRUCTURE.md          ← screen hierarchy, wireframes, states
+│   ├── API.md                   ← endpoints, role permissions, examples
+│   └── NOTEBOOKLM_PROMPT.md     ← pitch-deck prompt for NotebookLM
 ├── prisma/
-│   └── schema.prisma         ← production database design
+│   └── schema.prisma            ← production database design
+├── public/
+│   └── logo.png                 ← brand mark
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx          ← landing
-│   │   ├── login/            ← single sign-in form
-│   │   ├── dispatcher/       ← timeline · dispatch · drivers · orders
-│   │   ├── driver/           ← silent mode · help · profile
-│   │   ├── track/[code]/     ← customer tracking
-│   │   └── api/              ← REST endpoints
+│   │   ├── page.tsx             ← landing
+│   │   ├── login/               ← single sign-in form (role-aware)
+│   │   ├── dispatcher/          ← command center · dispatch · orders · drivers
+│   │   ├── driver/              ← silent mode · help · profile
+│   │   ├── customer/            ← customer dashboard
+│   │   ├── track/[code]/        ← public order tracking (no login)
+│   │   └── api/                 ← REST endpoints
 │   ├── components/
-│   │   ├── ui/               ← shadcn-style primitives
+│   │   ├── ui/                  ← shared primitives (Button, Card, Avatar...)
+│   │   ├── marketing/           ← landing, nav, hero
 │   │   ├── dispatcher/
 │   │   ├── driver/
 │   │   └── customer/
 │   ├── lib/
-│   │   ├── store.ts          ← in-memory data layer
+│   │   ├── store.ts             ← in-memory data layer
 │   │   ├── dispatch-engine.ts
 │   │   ├── trust-score.ts
 │   │   ├── eta.ts
 │   │   ├── auth.ts
 │   │   ├── seed.ts
 │   │   └── types.ts
-│   └── hooks/                ← SWR-based polling
+│   └── hooks/                   ← SWR-based polling
 └── README.md
 ```
 

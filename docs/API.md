@@ -1,4 +1,4 @@
-# API Architecture — TrustOS
+# API Architecture — Yalla Wassel
 
 REST over HTTPS, JSON bodies, cookie-based session in demo (JWT-ready). All routes live under `/api`.
 

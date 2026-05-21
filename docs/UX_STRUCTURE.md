@@ -1,4 +1,4 @@
-# UX Structure — TrustOS
+# UX Structure — Yalla Wassel
 
 > Visual language: **warm, calm, decisive**. Off-white canvas (#FAF7F2), deep teal-green for action (#15734C), amber-rust only for urgent (#C2410C). Red is reserved exclusively for the Help alert.
 
@@ -7,7 +7,7 @@
 ## 1. Screen Hierarchy
 
 ```
-TrustOS
+Yalla Wassel
 ├── /                              Landing — pitch + role chooser
 ├── /login                         Single form, role chosen by username
 ├── /track/[code]                  Customer — public, no auth
@@ -44,7 +44,7 @@ No nav. The track page is the whole product surface.
 ### 3.1 Landing (`/`)
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ TrustOS                                          Sign in │
+│ Yalla Wassel                                          Sign in │
 ├─────────────────────────────────────────────────────────┤
 │                                                          │
 │   Accountability without surveillance.                   │
@@ -276,4 +276,4 @@ All animation respects `prefers-reduced-motion`. Drivers in motion-sensitive con
 
 ## 10. The Pixel That Earns the Trust
 
-If a judge remembers one pixel of TrustOS, it should be this: **the dispatcher screen has no map.** That deliberate absence is the entire product thesis.
+If a judge remembers one pixel of Yalla Wassel, it should be this: **the dispatcher screen has no map.** That deliberate absence is the entire product thesis.
