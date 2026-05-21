@@ -22,6 +22,13 @@ function todayAt(hours: number, minutes = 0): string {
   return new Date(ammNow.getTime() - 3 * 3600_000).toISOString();
 }
 
+function daysAgo(days: number, hours = 12, minutes = 0): string {
+  const now = new Date(Date.now() - days * 24 * 3600_000);
+  const ammNow = new Date(now.getTime() + 3 * 3600_000);
+  ammNow.setUTCHours(hours, minutes, 0, 0);
+  return new Date(ammNow.getTime() - 3 * 3600_000).toISOString();
+}
+
 export const seedUsers: User[] = [
   {
     id: "user_dispatcher_hadeel",
@@ -78,6 +85,44 @@ export const seedUsers: User[] = [
     area: "East",
     availability: "off_duty",
   },
+  // ── Customers ────────────────────────────────────────────────────
+  // Each customer maps to the recipient name on one or more orders.
+  {
+    id: "user_customer_mona",
+    username: "mona",
+    name: "Mona K.",
+    role: "customer",
+  },
+  {
+    id: "user_customer_ahmad",
+    username: "ahmad",
+    name: "Ahmad S.",
+    role: "customer",
+  },
+  {
+    id: "user_customer_layla",
+    username: "layla",
+    name: "Layla H.",
+    role: "customer",
+  },
+  {
+    id: "user_customer_tareq",
+    username: "tareq",
+    name: "Tareq M.",
+    role: "customer",
+  },
+  {
+    id: "user_customer_hala",
+    username: "hala",
+    name: "Hala D.",
+    role: "customer",
+  },
+  {
+    id: "user_customer_noor",
+    username: "noor",
+    name: "Noor F.",
+    role: "customer",
+  },
 ];
 
 export const seedOrders: Order[] = [
@@ -93,6 +138,7 @@ export const seedOrders: Order[] = [
     priority: "urgent",
     status: "pending",
     confirmationCode: "4721",
+    customerId: "user_customer_mona",
     createdAt: todayAt(8, 6),
   },
   {
@@ -107,6 +153,7 @@ export const seedOrders: Order[] = [
     priority: "normal",
     status: "in_progress",
     confirmationCode: "1188",
+    customerId: "user_customer_ahmad",
     driverId: "user_driver_youssef",
     createdAt: todayAt(8, 10),
     assignedAt: todayAt(8, 14),
@@ -123,6 +170,7 @@ export const seedOrders: Order[] = [
     priority: "normal",
     status: "pending",
     confirmationCode: "5302",
+    customerId: "user_customer_layla",
     createdAt: todayAt(8, 20),
   },
   {
@@ -136,6 +184,7 @@ export const seedOrders: Order[] = [
     priority: "normal",
     status: "delivered",
     confirmationCode: "9094",
+    customerId: "user_customer_tareq",
     driverId: "user_driver_mahmoud",
     createdAt: todayAt(7, 30),
     assignedAt: todayAt(7, 35),
@@ -153,9 +202,9 @@ export const seedOrders: Order[] = [
     priority: "urgent",
     status: "pending",
     confirmationCode: "6655",
+    customerId: "user_customer_hala",
     createdAt: todayAt(8, 32),
   },
-  // One in-progress for Wael in the East — gives the timeline depth
   {
     id: "order_1006",
     trackingCode: "TRUST-1006",
@@ -167,9 +216,80 @@ export const seedOrders: Order[] = [
     priority: "normal",
     status: "in_progress",
     confirmationCode: "3320",
+    customerId: "user_customer_noor",
     driverId: "user_driver_wael",
     createdAt: todayAt(7, 50),
     assignedAt: todayAt(7, 55),
+  },
+
+  // ── Historical orders — populate customer dashboards with a track record ──
+  {
+    id: "order_h_mona_1",
+    trackingCode: "TRUST-0992",
+    externalRef: "0992",
+    pickupBusiness: "Reem Pharmacy",
+    pickupArea: "Wadi Saqra",
+    recipientName: "Mona K.",
+    recipientArea: "Khalda",
+    priority: "normal",
+    status: "delivered",
+    confirmationCode: "0044",
+    customerId: "user_customer_mona",
+    driverId: "user_driver_mahmoud",
+    createdAt: daysAgo(1, 14, 5),
+    assignedAt: daysAgo(1, 14, 10),
+    deliveredAt: daysAgo(1, 14, 38),
+  },
+  {
+    id: "order_h_mona_2",
+    trackingCode: "TRUST-0985",
+    externalRef: "0985",
+    pickupBusiness: "Bloom Flowers",
+    pickupArea: "Sweifieh",
+    recipientName: "Mona K.",
+    recipientArea: "Khalda",
+    priority: "normal",
+    status: "delivered",
+    confirmationCode: "7311",
+    customerId: "user_customer_mona",
+    driverId: "user_driver_youssef",
+    createdAt: daysAgo(4, 11, 20),
+    assignedAt: daysAgo(4, 11, 25),
+    deliveredAt: daysAgo(4, 11, 52),
+  },
+  {
+    id: "order_h_layla_1",
+    trackingCode: "TRUST-0997",
+    externalRef: "0997",
+    pickupBusiness: "Mama's Kitchen",
+    pickupArea: "Shmeisani",
+    recipientName: "Layla H.",
+    recipientArea: "Shmeisani",
+    priority: "normal",
+    status: "delivered",
+    confirmationCode: "2208",
+    customerId: "user_customer_layla",
+    driverId: "user_driver_amjad",
+    createdAt: daysAgo(1, 12, 30),
+    assignedAt: daysAgo(1, 12, 35),
+    deliveredAt: daysAgo(1, 12, 53),
+  },
+  {
+    id: "order_h_hala_1",
+    trackingCode: "TRUST-0989",
+    externalRef: "0989",
+    pickupBusiness: "Reem Pharmacy",
+    pickupArea: "Wadi Saqra",
+    recipientName: "Hala D.",
+    recipientArea: "Jabal Amman",
+    priority: "normal",
+    status: "delivered",
+    confirmationCode: "5546",
+    customerId: "user_customer_hala",
+    driverId: "user_driver_hamza",
+    createdAt: daysAgo(3, 9, 15),
+    assignedAt: daysAgo(3, 9, 18),
+    deliveredAt: daysAgo(3, 9, 33),
   },
 ];
 
@@ -240,7 +360,28 @@ export const seedCheckpoints: Checkpoint[] = [
     at: todayAt(8, 12),
     actorId: "user_driver_wael",
   },
+  // ── Historical full timelines ──────────────────────────────────
+  ...buildHistorical("order_h_mona_1", "user_driver_mahmoud", daysAgo(1, 14, 10), daysAgo(1, 14, 20), daysAgo(1, 14, 33), daysAgo(1, 14, 38)),
+  ...buildHistorical("order_h_mona_2", "user_driver_youssef", daysAgo(4, 11, 25), daysAgo(4, 11, 34), daysAgo(4, 11, 48), daysAgo(4, 11, 52)),
+  ...buildHistorical("order_h_layla_1", "user_driver_amjad", daysAgo(1, 12, 35), daysAgo(1, 12, 41), daysAgo(1, 12, 49), daysAgo(1, 12, 53)),
+  ...buildHistorical("order_h_hala_1", "user_driver_hamza", daysAgo(3, 9, 18), daysAgo(3, 9, 23), daysAgo(3, 9, 30), daysAgo(3, 9, 33)),
 ];
+
+function buildHistorical(
+  orderId: string,
+  driverId: string,
+  assignedAt: string,
+  pickedUpAt: string,
+  arrivedAt: string,
+  deliveredAt: string
+): Checkpoint[] {
+  return [
+    { id: `${orderId}_a`, orderId, kind: "assigned", at: assignedAt, actorId: "user_dispatcher_hadeel" },
+    { id: `${orderId}_p`, orderId, kind: "picked_up", at: pickedUpAt, actorId: driverId },
+    { id: `${orderId}_n`, orderId, kind: "arrived_nearby", at: arrivedAt, actorId: driverId },
+    { id: `${orderId}_d`, orderId, kind: "delivered", at: deliveredAt, actorId: driverId },
+  ];
+}
 
 export const seedDelays: DelayReason[] = [
   {

@@ -194,9 +194,9 @@ export function Landing() {
               body="Silent Mode — one screen, one order, one tap. No notifications."
             />
             <DoorCard
-              href="/track/TRUST-1001"
+              href="/login?as=customer"
               label="Customer"
-              body="Public tracking. Timeline, not a map. No driver location ever shared."
+              body="Sign in to see your orders and confirmation codes. Or use a tracking-code link for one-off recipients."
             />
           </div>
         </div>

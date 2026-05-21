@@ -29,7 +29,8 @@ export async function GET(
     );
   if (
     user.role !== "dispatcher" &&
-    !(user.role === "driver" && order.driverId === user.id)
+    !(user.role === "driver" && order.driverId === user.id) &&
+    !(user.role === "customer" && order.customerId === user.id)
   ) {
     return NextResponse.json(
       { error: { code: "forbidden" } },

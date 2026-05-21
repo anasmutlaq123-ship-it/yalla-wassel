@@ -11,7 +11,13 @@ export function LoginForm() {
   const hint = params.get("as");
 
   const [username, setUsername] = useState(
-    hint === "dispatcher" ? "hadeel" : hint === "driver" ? "mahmoud" : ""
+    hint === "dispatcher"
+      ? "hadeel"
+      : hint === "driver"
+        ? "mahmoud"
+        : hint === "customer"
+          ? "mona"
+          : ""
   );
   const [password, setPassword] = useState("trustos");
   const [pending, setPending] = useState(false);
@@ -34,7 +40,13 @@ export function LoginForm() {
       }
       const j = await res.json();
       const role: string = j.user.role;
-      router.push(role === "dispatcher" ? "/dispatcher" : "/driver");
+      router.push(
+        role === "dispatcher"
+          ? "/dispatcher"
+          : role === "customer"
+            ? "/customer"
+            : "/driver"
+      );
     } finally {
       setPending(false);
     }

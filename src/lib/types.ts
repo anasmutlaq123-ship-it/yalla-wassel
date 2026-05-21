@@ -71,6 +71,9 @@ export interface Order {
   priority: Priority;
   status: OrderStatus;
   confirmationCode: string;
+  // Logged-in customer who owns this order. Optional so legacy
+  // "delivery without an account" still works via the public track URL.
+  customerId?: string;
   driverId?: string;
   createdAt: string;
   assignedAt?: string;

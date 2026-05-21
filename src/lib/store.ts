@@ -157,6 +157,13 @@ export function activeOrderCountForDriver(driverId: string): number {
   ).length;
 }
 
+// Prisma: prisma.order.findMany({ where: { customerId }, orderBy: { createdAt: "desc" } })
+export function listOrdersForCustomer(customerId: string): Order[] {
+  return store.orders
+    .filter((o) => o.customerId === customerId)
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+}
+
 export function createOrder(input: {
   pickupBusiness: string;
   pickupArea: string;
