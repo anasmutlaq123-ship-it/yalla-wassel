@@ -45,12 +45,35 @@ The dispatch engine ranks drivers by `area match + current workload + availabili
 
 ## Run It
 
+### Prerequisites
+- **Node.js 20 or newer** — <https://nodejs.org> (LTS installer)
+- *(Optional)* **Git** — <https://git-scm.com> — only needed if you want to clone instead of download
+
+### From a fresh machine
+
+**Easiest — download the ZIP:**
+1. Open the repo on GitHub, click the green **`Code`** button → **`Download ZIP`**
+2. Extract it anywhere
+3. Open a terminal inside the extracted folder and run:
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+**Or clone with Git** (recommended if you'll keep editing):
 ```bash
+git clone https://github.com/anasmutlaq123-ship-it/yalla-wassel.git
+cd yalla-wassel
 npm install
 npm run dev
 ```
 
 Open <http://localhost:3000>.
+
+### Looking at the pitch deck
+
+- **`pitch.html`** — double-click to open in any browser; arrow keys / spacebar to navigate
+- **`pitch.pptx`** — open in PowerPoint, Keynote, or Google Slides
 
 ### Demo accounts (all password: `trustos`)
 
