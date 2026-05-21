@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Yalla Wassel — Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: Inter, -apple-system, system-ui, sans-serif;
+    color: #111827;
+    background: #fff;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .deck { position: relative; height: 100vh; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity .45s cubic-bezier(.2,.8,.2,1);
+    padding: clamp(40px, 6vw, 96px);
+  }
+  .slide.active { opacity: 1; visibility: visible; }
+  .slide.active .inner { animation: fade-up .55s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  .inner { width: 100%; max-width: 1180px; }
+
+  .bg-mesh::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(50% 50% at 85% 5%, rgba(168,85,247,.18), transparent 60%),
+      radial-gradient(45% 40% at 5% 95%, rgba(124,58,237,.12), transparent 60%);
+  }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.18em; color: #7C3AED;
+    padding: 6px 14px; border-radius: 999px;
+    background: #F5F3FF; border: 1px solid #E9E0FF;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #7C3AED; }
+
+  h1.hero { font-size: clamp(40px, 7vw, 96px); line-height: .96; font-weight: 900; letter-spacing: -.035em; }
+  h1.hero .grad {
+    background: linear-gradient(180deg, #7C3AED, #5B21B6);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h2 { font-size: clamp(28px, 4.5vw, 56px); line-height: 1.04; font-weight: 800; letter-spacing: -.028em; }
+  h3 { font-size: clamp(20px, 2.3vw, 28px); font-weight: 700; letter-spacing: -.015em; }
+  p.lead { font-size: clamp(16px, 1.4vw, 22px); line-height: 1.55; color: #374151; max-width: 64ch; }
+  p.muted { color: #6B7280; }
+
+  .row { display: grid; gap: 28px; }
+  .row.cols-2 { grid-template-columns: 1.1fr 1fr; align-items: center; }
+  .row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 900px) { .row.cols-2, .row.cols-3 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: #fff; border: 1px solid #EFECF6; border-radius: 24px;
+    padding: 28px; box-shadow: 0 1px 3px rgba(17,24,39,.04);
+  }
+  .card .n { font: 700 13px/1 Inter; color: #7C3AED; letter-spacing: .1em; text-transform: uppercase; }
+  .card h3 { margin-top: 12px; }
+  .card p { margin-top: 10px; color: #6B7280; font-size: 15px; line-height: 1.55; }
+
+  .pill {
+    display: inline-flex; gap: 8px; align-items: center;
+    padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    background: #EDE9FE; color: #5B21B6;
+  }
+  .quote {
+    font-size: clamp(22px, 3vw, 38px); line-height: 1.2; font-weight: 600;
+    letter-spacing: -.018em; color: #111827; max-width: 22ch;
+  }
+  .quote .open { color: #7C3AED; font-size: 1.4em; vertical-align: -0.15em; }
+
+  .stat { display: flex; align-items: baseline; gap: 14px; }
+  .stat .v { font-size: clamp(48px, 8vw, 96px); font-weight: 900; letter-spacing: -.04em; color: #111827; line-height: 1; }
+  .stat .l { font-size: 14px; font-weight: 600; color: #6B7280; }
+
+  ul.bullets { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  ul.bullets li { display: flex; gap: 14px; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.45; color: #1F2937; }
+  ul.bullets li::before {
+    content: ""; display: block; flex: 0 0 8px; height: 8px;
+    border-radius: 999px; background: #7C3AED; margin-top: .55em;
+  }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #A855F7, #7C3AED 55%, #5B21B6);
+    color: #fff; padding: 14px 22px; border-radius: 18px;
+    font-weight: 700; text-decoration: none;
+    box-shadow: 0 12px 30px -12px rgba(124,58,237,.6);
+  }
+
+  .three-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
+  @media (max-width: 900px) { .three-pillars { grid-template-columns: 1fr; } }
+
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 900px) { .compare { grid-template-columns: 1fr; } }
+  .compare .col {
+    border: 1px solid #EFECF6; border-radius: 24px; padding: 24px;
+  }
+  .compare .col.bad { background: #FAFAFA; }
+  .compare .col.good { background: linear-gradient(160deg, #F5F3FF, #FFFFFF); border-color: #E9E0FF; }
+  .compare .col h4 { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
+  .compare .col.bad h4 { color: #9CA3AF; }
+  .compare .col.good h4 { color: #7C3AED; }
+  .compare ul { list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 15px; }
+  .compare .col.bad li { color: #6B7280; text-decoration: line-through; text-decoration-color: rgba(156,163,175,.55); }
+  .compare .col.good li { color: #1F2937; }
+  .compare li::before { content: "— "; color: #9CA3AF; }
+  .compare .col.good li::before { color: #7C3AED; }
+
+  /* role chips */
+  .roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  @media (max-width: 900px) { .roles { grid-template-columns: 1fr; } }
+  .role {
+    background: #fff; border: 1px solid #EFECF6; border-radius: 22px; padding: 22px;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .role:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -16px rgba(91,33,182,.18); }
+  .role .name { font-weight: 800; font-size: 20px; }
+  .role .desc { color: #6B7280; font-size: 14px; line-height: 1.5; margin-top: 8px; }
+  .role .tag { font-size: 11px; font-weight: 700; color: #7C3AED; text-transform: uppercase; letter-spacing: .12em; }
+
+  /* nav */
+  .nav {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; align-items: center;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    border: 1px solid #EFECF6; border-radius: 999px; padding: 8px 16px;
+    box-shadow: 0 8px 24px -8px rgba(17,24,39,.12);
+    z-index: 50;
+  }
+  .nav button {
+    width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer;
+    background: #F5F3FF; color: #5B21B6; font-weight: 700;
+    display: grid; place-items: center;
+    transition: background .15s;
+  }
+  .nav button:hover { background: #EDE9FE; }
+  .nav .count { font-size: 12px; font-weight: 700; color: #6B7280; padding: 0 8px; min-width: 60px; text-align: center; tabular-nums: 1; }
+
+  .progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #A855F7, #5B21B6);
+    z-index: 60; transition: width .35s cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* checkpoint visualization */
+  .ledger {
+    display: flex; gap: 14px; align-items: center; margin-top: 28px;
+  }
+  .ledger .step {
+    flex: 1; padding: 18px 16px; border: 1px solid #EFECF6; border-radius: 18px;
+    background: #fff;
+    transition: all .25s;
+  }
+  .ledger .step.on { background: linear-gradient(160deg, #F5F3FF, #fff); border-color: #C4B5FD; }
+  .ledger .step .dot {
+    width: 12px; height: 12px; border-radius: 50%; background: #E5E7EB; margin-bottom: 12px;
+  }
+  .ledger .step.on .dot { background: #7C3AED; box-shadow: 0 0 0 6px rgba(124,58,237,.14); }
+  .ledger .step .lbl { font-weight: 700; font-size: 14px; }
+  .ledger .step .t { font-size: 12px; color: #6B7280; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .arrow { color: #C4B5FD; font-size: 22px; line-height: 1; }
+  @media (max-width: 720px) { .ledger { flex-direction: column; align-items: stretch; } .arrow { transform: rotate(90deg); align-self: center; } }
+
+  .scope {
+    margin-top: 36px; padding: 20px 24px; border-radius: 22px;
+    background: linear-gradient(135deg, #A855F7, #7C3AED 55%, #5B21B6);
+    color: #fff; font-weight: 600; font-size: 16px;
+    box-shadow: 0 24px 60px -20px rgba(124,58,237,.45);
+  }
+
+  .closing-line {
+    font-size: clamp(28px, 4vw, 48px); line-height: 1.18; font-weight: 800;
+    letter-spacing: -.022em; max-width: 22ch; margin: 0 auto; text-align: center;
+  }
+  .closing-line .grad { background: linear-gradient(180deg, #7C3AED, #5B21B6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .meta {
+    position: fixed; top: 20px; left: 24px;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 14px; color: #111827; z-index: 40;
+  }
+  .meta .mark {
+    width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #A855F7, #5B21B6);
+    display: grid; place-items: center; color: #fff; font-size: 14px;
+  }
+  .meta .name { letter-spacing: -.012em; }
+  .meta .name .accent { color: #7C3AED; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="meta">
+  <span class="mark">▲</span>
+  <span class="name">Yalla <span class="accent">Wassel</span></span>
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- Slide 1 — Title -->
+  <section class="slide bg-mesh">
+    <div class="inner" style="text-align:left;">
+      <span class="eyebrow"><span class="dot"></span>Amman · 2026</span>
+      <h1 class="hero" style="margin-top:24px;">
+        Accountability<br>
+        <span class="grad">without</span><br>
+        surveillance.
+      </h1>
+      <p class="lead muted" style="margin-top:28px;">
+        A same-day delivery operation that ditched GPS — and stopped losing drivers.
+      </p>
+      <p style="margin-top:34px; font-weight:600; color:#7C3AED;">Yalla Wassel — built for Hadeel's team in Wadi Saqra.</p>
+    </div>
+  </section>
+
+  <!-- Slide 2 — The Problem -->
+  <section class="slide">
+    <div class="inner">
+      <span class="eyebrow">The Problem</span>
+      <div class="row cols-2" style="margin-top:28px;">
+        <div>
+          <h2>Eight drivers.<br>One sticky-note operation.</h2>
+          <p class="lead" style="margin-top:18px;">
+            Hadeel runs a same-day delivery shop. Orders arrive via WhatsApp,
+            yelling, and Post-its. She installed GPS trackers to bring order.
+          </p>
+          <p class="lead muted" style="margin-top:14px;">
+            Two drivers quit the same week. One said it out loud.
+          </p>
+        </div>
+        <div style="text-align:left;">
+          <div class="quote">
+            <span class="open">"</span>You don't pay me enough to be watched all day.<span style="color:#7C3AED;">"</span>
+          </div>
+          <p class="muted" style="margin-top:14px; font-size:14px;">— Mahmoud, before resigning</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 3 — The Insight -->
+  <section class="slide bg-mesh">
+    <div class="inner" style="text-align:center;">
+      <span class="eyebrow">The Insight</span>
+      <h2 style="margin-top:24px; max-width:18ch; margin-left:auto; margin-right:auto;">
+        Surveillance and <span style="color:#7C3AED;">accountability</span> are different problems.
+      </h2>
+      <p class="lead" style="margin-top:24px; margin-left:auto; margin-right:auto;">
+        Knowing <em>where</em> a driver is doesn't tell you whether they kept their word.
+        Accountability is the result of <strong>clear commitments</strong>, not constant observation.
+      </p>
+
+      <div class="compare" style="margin-top:38px; text-align:left;">
+        <div class="col bad">
+          <h4>GPS tells you</h4>
+          <ul>
+            <li>Coordinates every 30s</li>
+            <li>Speed and idle time</li>
+            <li>Route deviations</li>
+          </ul>
+        </div>
+        <div class="col good">
+          <h4>What actually matters</h4>
+          <ul>
+            <li>Did they pick it up?</li>
+            <li>Are they on their way?</li>
+            <li>Did the customer get it?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 4 — The Solution -->
+  <section class="slide">
+    <div class="inner">
+      <span class="eyebrow">The Solution</span>
+      <h2 style="margin-top:20px;">Yalla Wassel runs on three primitives.</h2>
+      <p class="lead muted" style="margin-top:14px;">Not surveillance. Three small ideas, working together.</p>
+
+      <div class="three-pillars">
+        <div class="card">
+          <div class="n">01</div>
+          <h3>Trust Ledger</h3>
+          <p>Four checkpoint taps per delivery. Append-only, public commitments. Zero coordinates stored.</p>
+        </div>
+        <div class="card">
+          <div class="n">02</div>
+          <h3>Mutual Trust Score</h3>
+          <p>Drivers rate the system every week. The dispatcher sees their score next to her own.</p>
+        </div>
+        <div class="card">
+          <div class="n">03</div>
+          <h3>Explainable Dispatch</h3>
+          <p>Every assignment ships with one sentence. Override the engine? You have to say why.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5 — Pillar 1: Trust Ledger -->
+  <section class="slide bg-mesh">
+    <div class="inner">
+      <span class="pill">Pillar 01</span>
+      <h2 style="margin-top:16px;">The Trust Ledger</h2>
+      <p class="lead" style="margin-top:14px; max-width:60ch;">
+        Drivers tap four buttons per delivery. Each tap is a <strong>public commitment</strong>,
+        not a tracked coordinate. Append-only, auditable, dignified.
+      </p>
+
+      <div class="ledger">
+        <div class="step on"><div class="dot"></div><div class="lbl">Assigned</div><div class="t">08:14</div></div>
+        <span class="arrow">→</span>
+        <div class="step on"><div class="dot"></div><div class="lbl">Picked up</div><div class="t">08:28</div></div>
+        <span class="arrow">→</span>
+        <div class="step on"><div class="dot"></div><div class="lbl">Arrived nearby</div><div class="t">08:41</div></div>
+        <span class="arrow">→</span>
+        <div class="step"><div class="dot"></div><div class="lbl">Delivered</div><div class="t">—</div></div>
+      </div>
+
+      <p class="muted" style="margin-top:28px; font-size:14px;">
+        Optional delay reasons live alongside — traffic, store delay, customer unavailable, vehicle. One tap. Customer sees it. No phone call required.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 6 — Pillar 2: Mutual Trust -->
+  <section class="slide">
+    <div class="inner">
+      <span class="pill">Pillar 02</span>
+      <h2 style="margin-top:16px;">Trust runs <span style="color:#7C3AED;">both ways.</span></h2>
+      <p class="lead" style="margin-top:14px; max-width:62ch;">
+        Drivers rate the system weekly on three axes: <strong>fairness</strong>, <strong>fit</strong>, <strong>pressure</strong>.
+        The dispatcher sees their team's score next to her own.
+      </p>
+
+      <div class="row cols-3" style="margin-top:34px;">
+        <div class="card" style="text-align:center;">
+          <div class="stat" style="justify-content:center;">
+            <span class="v">88</span>
+          </div>
+          <p style="margin-top:10px; font-weight:600; color:#111827;">Driver score</p>
+          <p style="margin-top:4px; font-size:13px;">on-time, completion, streaks</p>
+        </div>
+        <div class="card" style="text-align:center; background: linear-gradient(160deg, #F5F3FF, #fff); border-color:#E9E0FF;">
+          <div class="stat" style="justify-content:center;">
+            <span class="v" style="background: linear-gradient(180deg, #7C3AED, #5B21B6); -webkit-background-clip:text; background-clip:text; color:transparent;">87</span>
+          </div>
+          <p style="margin-top:10px; font-weight:700; color:#5B21B6;">Mutual Trust Index</p>
+          <p style="margin-top:4px; font-size:13px; color:#6B7280;">geometric mean — both sides count</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="stat" style="justify-content:center;">
+            <span class="v">85</span>
+          </div>
+          <p style="margin-top:10px; font-weight:600; color:#111827;">System score</p>
+          <p style="margin-top:4px; font-size:13px;">fairness, fit, pressure</p>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:28px; font-size:15px;">
+        The geometric mean is deliberate: <strong>you can't trade one side for the other</strong>. A team running at 95 with a system score of 40 doesn't get a "well done".
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 7 — Pillar 3: Explainable Dispatch -->
+  <section class="slide bg-mesh">
+    <div class="inner">
+      <span class="pill">Pillar 03</span>
+      <h2 style="margin-top:16px;">Every assignment, one sentence.</h2>
+
+      <div class="card" style="margin-top:28px; max-width: 760px; background: linear-gradient(160deg, #F5F3FF, #fff); border-color:#E9E0FF;">
+        <div class="n">Engine suggests · #1005 · Urgent</div>
+        <h3 style="margin-top:10px; font-size:26px;">Hamza — Central</h3>
+        <ul class="bullets" style="margin-top:14px;">
+          <li>Jabal Amman is in his coverage</li>
+          <li>0 active orders right now</li>
+          <li>96% on-time rate on urgent</li>
+          <li>Last 4 deliveries to this street were his</li>
+        </ul>
+      </div>
+
+      <p class="lead muted" style="margin-top:24px; max-width:60ch;">
+        Take the pick in one click. Override? <strong>You have to say why.</strong>
+        That reason becomes a signal the engine learns from.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 8 — Three Roles -->
+  <section class="slide">
+    <div class="inner">
+      <span class="eyebrow">Three roles</span>
+      <h2 style="margin-top:18px;">Built around the way work actually happens.</h2>
+
+      <div class="roles">
+        <div class="role">
+          <span class="tag">Dispatcher</span>
+          <p class="name" style="margin-top:6px;">Command center</p>
+          <p class="desc">Live timeline, explainable dispatch, mutual-trust dashboard. <strong>No map.</strong></p>
+        </div>
+        <div class="role" style="border-color:#C4B5FD; background:linear-gradient(160deg,#F5F3FF,#fff);">
+          <span class="tag">Driver</span>
+          <p class="name" style="margin-top:6px;">Silent Mode</p>
+          <p class="desc">One screen, one order, one button at a time. Zero notifications.</p>
+        </div>
+        <div class="role">
+          <span class="tag">Customer</span>
+          <p class="name" style="margin-top:6px;">Live tracking</p>
+          <p class="desc">Timeline, not a map. ETA, status, confirmation code. <strong>Never sees driver location.</strong></p>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:28px; font-size:15px;">
+        The dispatcher screen has <span style="color:#7C3AED; font-weight:700;">no map</span>. That deliberate absence is the entire product thesis.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 9 — Why We Win -->
+  <section class="slide bg-mesh">
+    <div class="inner">
+      <span class="eyebrow">Why we win</span>
+      <h2 style="margin-top:18px;">The moat is a team that doesn't quit.</h2>
+
+      <div class="row cols-3" style="margin-top:30px;">
+        <div class="card">
+          <div class="n">vs Onfleet / Bringg</div>
+          <p style="margin-top:8px; font-size:15px; color:#1F2937; line-height:1.5;">
+            Built for fleets of interchangeable contractors. We build for <strong>retention</strong>.
+          </p>
+        </div>
+        <div class="card">
+          <div class="n">vs WhatsApp + sheets</div>
+          <p style="margin-top:8px; font-size:15px; color:#1F2937; line-height:1.5;">
+            10× more legible without becoming 10× more invasive.
+          </p>
+        </div>
+        <div class="card">
+          <div class="n">vs Full GPS surveillance</div>
+          <p style="margin-top:8px; font-size:15px; color:#1F2937; line-height:1.5;">
+            Surveillance has a hidden cost: the best people leave.
+          </p>
+        </div>
+      </div>
+
+      <div class="scope">
+        North-star metric: <strong>Mutual Trust Index ≥ 85</strong> within month one. Track the team you can't afford to lose.
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 10 — Closing -->
+  <section class="slide">
+    <div class="inner" style="text-align:center;">
+      <span class="eyebrow">What's next</span>
+      <p class="closing-line" style="margin-top:28px;">
+        The dispatcher screen has <span class="grad">no map.</span><br>
+        That deliberate absence is the entire product.
+      </p>
+      <p class="lead muted" style="margin-top:26px; margin-left:auto; margin-right:auto;">
+        v0.1 ships today. v0.2 onboards 5 more Amman operations. v1.0 opens the checkpoint primitive as an API — trust infrastructure for any work where people feel surveilled.
+      </p>
+      <div style="margin-top:38px;">
+        <a class="cta" href="https://github.com/anasmutlaq123-ship-it/yalla-wassel" target="_blank" rel="noreferrer">View the repo →</a>
+      </div>
+      <p class="muted" style="margin-top:32px; font-size:13px;">Yalla Wassel · Amman · since 2024</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">‹</button>
+  <span class="count"><span id="i">1</span> / <span id="n">10</span></span>
+  <button id="next" aria-label="Next">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let cur = 0;
+  document.getElementById('n').textContent = total;
+  function show(i) {
+    cur = Math.max(0, Math.min(total - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === cur));
+    document.getElementById('i').textContent = cur + 1;
+    document.getElementById('progress').style.width = ((cur + 1) / total * 100) + '%';
+    history.replaceState(null, '', '#' + (cur + 1));
+  }
+  document.getElementById('prev').onclick = () => show(cur - 1);
+  document.getElementById('next').onclick = () => show(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(cur + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(cur - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(total - 1); }
+  });
+  const start = parseInt(location.hash.slice(1), 10);
+  show(isFinite(start) && start > 0 ? start - 1 : 0);
+</script>
+</body>
+</html>
