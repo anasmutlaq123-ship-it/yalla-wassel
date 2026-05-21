@@ -1,0 +1,254 @@
+// TrustOS — production database schema.
+//
+// Designed so the in-memory demo store (src/lib/store.ts) is a structural
+// peer: every relation here maps one-to-one to a store accessor.
+//
+// Design principles:
+//   1. Events are append-only — Checkpoint, HelpAlert, AssignmentLog,
+//      WeeklyRating, OverrideReason are all immutable once written.
+//   2. Trust scores are *derived*. Never stored as a single number that
+//      could be tampered with; always computed from underlying events.
+//   3. Driver locations are intentionally absent — the schema cannot
+//      store a GPS coordinate, by design. This is the privacy property.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Enums ───────────────────────────────────────────────────────────────
+
+enum Role {
+  CUSTOMER     // anonymous via track code
+  DRIVER
+  DISPATCHER
+}
+
+enum DriverAvailability {
+  AVAILABLE
+  ON_DELIVERY
+  OFF_DUTY
+}
+
+enum OrderStatus {
+  PENDING       // created, not yet assigned
+  ASSIGNED      // driver assigned, not yet picked up
+  IN_PROGRESS   // any checkpoint after pickup
+  DELIVERED
+  CANCELLED
+}
+
+enum Priority {
+  NORMAL
+  URGENT
+}
+
+enum CheckpointKind {
+  ASSIGNED
+  PICKED_UP
+  ARRIVED_NEARBY
+  DELIVERED
+}
+
+enum DelayKind {
+  TRAFFIC
+  STORE_DELAY
+  CUSTOMER_UNAVAILABLE
+  VEHICLE
+  OTHER
+}
+
+enum HelpKind {
+  TRAFFIC
+  STORE_DELAY
+  CUSTOMER_UNAVAILABLE
+  VEHICLE
+  OTHER
+}
+
+enum HelpStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED_HANDOFF
+}
+
+// ── Core models ─────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  name         String
+  role         Role
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  // Driver-only fields (kept on User to keep auth simple)
+  area               String?
+  availability       DriverAvailability?
+  workloadCapMax     Int?     // dispatcher-imposed cap
+  workloadCapUntil   DateTime?
+
+  // Relations
+  driverOrders     Order[]         @relation("DriverOrders")
+  assignmentsMade  AssignmentLog[] @relation("AssignmentDispatcher")
+  helpAlertsRaised HelpAlert[]     @relation("HelpAlertDriver")
+  helpResolved     HelpAlert[]     @relation("HelpAlertResolver")
+  checkpoints      Checkpoint[]    @relation("CheckpointActor")
+  weeklyRatings    WeeklyRating[]
+  familiarities    AreaFamiliarity[]
+
+  @@index([role])
+  @@index([availability])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  trackingCode    String      @unique          // e.g. TRUST-1001
+  externalRef     String?                       // pharmacy's own ref
+  pickupBusiness  String
+  pickupArea      String
+  recipientName   String
+  recipientArea   String
+  recipientNotes  String?
+  priority        Priority    @default(NORMAL)
+  status          OrderStatus @default(PENDING)
+  confirmationCode String     // 4-digit, given to recipient
+
+  driverId        String?
+  driver          User?       @relation("DriverOrders", fields: [driverId], references: [id])
+
+  createdAt       DateTime    @default(now())
+  assignedAt      DateTime?
+  deliveredAt     DateTime?
+
+  checkpoints     Checkpoint[]
+  delayReasons    DelayReason[]
+  helpAlerts      HelpAlert[]
+  assignmentLog   AssignmentLog[]
+
+  @@index([status])
+  @@index([driverId])
+  @@index([trackingCode])
+}
+
+// Append-only commitment ledger — the heart of TrustOS.
+model Checkpoint {
+  id        String         @id @default(cuid())
+  orderId   String
+  order     Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  kind      CheckpointKind
+  at        DateTime       @default(now())
+  actorId   String
+  actor     User           @relation("CheckpointActor", fields: [actorId], references: [id])
+  note      String?
+
+  @@index([orderId, at])
+}
+
+// Optional context appended by the driver. Separate from Checkpoint so
+// the four-state ledger stays uncluttered.
+model DelayReason {
+  id      String     @id @default(cuid())
+  orderId String
+  order   Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  kind    DelayKind
+  at      DateTime   @default(now())
+  note    String?
+
+  @@index([orderId, at])
+}
+
+// Every dispatch attempt is logged — both the engine's suggestions and
+// the dispatcher's final pick. Overrides include a reason which trains
+// the engine over time.
+model AssignmentLog {
+  id              String   @id @default(cuid())
+  orderId         String
+  order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  dispatcherId    String
+  dispatcher      User     @relation("AssignmentDispatcher", fields: [dispatcherId], references: [id])
+  assignedDriverId String
+  rankedSuggestionsJson Json   // stored snapshot of the engine's top-3 + scores
+  overrideReason  String?    // null = took top suggestion; non-null = explained override
+  at              DateTime  @default(now())
+
+  @@index([orderId])
+}
+
+// Help alerts — driver-raised, dispatcher-resolved.
+model HelpAlert {
+  id          String     @id @default(cuid())
+  driverId    String
+  driver      User       @relation("HelpAlertDriver", fields: [driverId], references: [id])
+  orderId     String?
+  order       Order?     @relation(fields: [orderId], references: [id])
+  kind        HelpKind
+  note        String?
+  status      HelpStatus @default(OPEN)
+  raisedAt    DateTime   @default(now())
+  resolvedAt  DateTime?
+  resolverId  String?
+  resolver    User?      @relation("HelpAlertResolver", fields: [resolverId], references: [id])
+  handoffToId String?
+
+  @@index([status, raisedAt])
+}
+
+// Driver-to-system trust rating. Submitted weekly. Append-only.
+model WeeklyRating {
+  id                String   @id @default(cuid())
+  driverId          String
+  driver            User     @relation(fields: [driverId], references: [id])
+  weekOf            DateTime // Monday 00:00 in Asia/Amman
+  fairness          Int      // 1..5
+  assignmentQuality Int      // 1..5
+  pressure          Int      // 1..5 (LOWER is better)
+  note              String?
+  submittedAt       DateTime @default(now())
+
+  @@unique([driverId, weekOf])
+  @@index([weekOf])
+}
+
+// Familiarity = how many recent deliveries this driver completed in a
+// given neighborhood. Updated incrementally on Delivered checkpoints.
+model AreaFamiliarity {
+  id          String   @id @default(cuid())
+  driverId    String
+  driver      User     @relation(fields: [driverId], references: [id])
+  area        String
+  deliveries  Int      @default(0)
+  lastAt      DateTime?
+
+  @@unique([driverId, area])
+  @@index([area])
+}
+
+// Historical travel times between two neighborhoods. Seeded from
+// operator knowledge; learned from completed deliveries over time.
+model AreaTravelStat {
+  id        String   @id @default(cuid())
+  fromArea  String
+  toArea    String
+  meanMin   Int      // mean minutes
+  p80Min    Int      // 80th-percentile minutes (for ETA upper bound)
+  samples   Int      @default(0)
+
+  @@unique([fromArea, toArea])
+  @@index([fromArea])
+}
+
+// Rating left by a customer at delivery time. Optional and non-blocking.
+model CustomerRating {
+  id        String   @id @default(cuid())
+  orderId   String   @unique
+  respectful Boolean
+  onTime    Boolean
+  correct   Boolean
+  note      String?
+  at        DateTime @default(now())
+}

@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --hero-blur: blur(20px);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv11", "ss01", "ss03", "cv02";
+    letter-spacing: -0.005em;
+  }
+
+  body {
+    @apply bg-canvas text-ink;
+    font-family:
+      "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+      "Helvetica Neue", sans-serif;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.28);
+    border-radius: 0.5rem;
+  }
+
+  /* Native range styling — driver weekly rating */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 9999px;
+    background: theme("colors.surface.line");
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 9999px;
+    background: white;
+    border: 2px solid theme("colors.trust.DEFAULT");
+    box-shadow:
+      0 2px 6px rgba(76, 29, 149, 0.22),
+      0 0 0 4px rgba(124, 58, 237, 0.08);
+    cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 9999px;
+    background: white;
+    border: 2px solid theme("colors.trust.DEFAULT");
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.18);
+    color: theme("colors.ink.DEFAULT");
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Word with a purple gradient fill — used on hero headlines */
+  .text-violet-fill {
+    background-image: theme("backgroundImage.violet-text");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Glassmorphism — subtle, for the sticky navbar and hero overlay cards */
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.84);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+  }
+
+  /* Repeating dot pattern — used on hero background blobs */
+  .dot-grid {
+    background-image: radial-gradient(
+      rgba(124, 58, 237, 0.13) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+
+  /* Inner-top highlight on dark gradient buttons */
+  .button-inner-glow {
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+  }
+
+  /* Hide scrollbar gracefully on horizontal scrollers */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
