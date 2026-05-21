@@ -36,7 +36,7 @@ export function TopNav() {
           : "bg-transparent border-b border-transparent"
       )}
     >
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-10 h-24 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-9 sm:px-[72px] h-24 flex items-center justify-between">
         <Logo size="lg" />
 
         <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">

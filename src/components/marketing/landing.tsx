@@ -27,7 +27,7 @@ export function Landing() {
       <TopNav />
 
       {/* ── HERO ───────────────────────────────────────────────────── */}
-      <section className="relative max-w-[1600px] mx-auto px-5 sm:px-10 pt-32 sm:pt-40 pb-24">
+      <section className="relative max-w-[1600px] mx-auto px-9 sm:px-[72px] pt-32 sm:pt-40 pb-24">
         <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-10 items-center">
           {/* Left */}
           <div>
@@ -133,7 +133,7 @@ export function Landing() {
 
       {/* ── FEATURES ───────────────────────────────────────────────── */}
       <section id="features" className="relative py-24 sm:py-28">
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-10">
+        <div className="max-w-[1600px] mx-auto px-9 sm:px-[72px]">
           <motion.div {...fadeUp} className="max-w-2xl mb-14">
             <Badge tone="trust" size="md">
               The system
@@ -172,7 +172,7 @@ export function Landing() {
 
       {/* ── ROLE DOORS ─────────────────────────────────────────────── */}
       <section className="relative py-24 sm:py-28 bg-surface">
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-10">
+        <div className="max-w-[1600px] mx-auto px-9 sm:px-[72px]">
           <motion.div {...fadeUp} className="max-w-2xl mb-12">
             <Badge tone="trust" size="md">
               Three doors
@@ -224,7 +224,7 @@ export function Landing() {
 
       {/* ── CTA ────────────────────────────────────────────────────── */}
       <section className="relative pb-24">
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-10">
+        <div className="max-w-[1600px] mx-auto px-9 sm:px-[72px]">
           <motion.div
             {...fadeUp}
             className="relative overflow-hidden rounded-4xl bg-violet-grad p-10 sm:p-14 text-white shadow-glow"
@@ -265,7 +265,7 @@ export function Landing() {
       </section>
 
       <footer className="border-t border-surface-line">
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-10 py-8 flex flex-wrap items-center justify-between gap-3">
+        <div className="max-w-[1600px] mx-auto px-9 sm:px-[72px] py-8 flex flex-wrap items-center justify-between gap-3">
           <Logo size="sm" />
           <p className="text-xs text-ink-muted">
             © Yalla Wassel · Built by hand
